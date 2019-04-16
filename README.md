@@ -5,6 +5,16 @@ There are two example data sets that you can use to test the alghorithm.
 
 ## Getting Started
 
+### Prerequisites
+
+First, you need to install these libraries:
+
+* pandas
+* matplotlib
+* sklearn
+
+### Importing library to your python script
+
 Clone the repository or download zip version and copy "Self-Organizing-Map.py" to the folder with your python script.
 To run the code you have to import it first:
 
