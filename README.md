@@ -22,7 +22,7 @@ To run the code you have to import it first:
 import * from Self-Organizing-Map
 ```
 
-Then import your a set of data from .csv file:
+Then import your set of data from .csv file:
 
 ```
 data = pd.read_csv("irisData.csv", header=0)
