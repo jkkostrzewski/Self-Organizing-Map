@@ -15,7 +15,7 @@ First, you need to install these libraries:
 
 ### Importing library to your python script
 
-Clone the repository or download zip version and copy "Self-Organizing-Map.py" to the folder with your python script.
+Clone the repository or download zip version and copy "SelfOrganizingMap.py" to the folder with your python script.
 To run the code you have to import the SOM class and pandas library:
 
 ```
@@ -32,7 +32,7 @@ data = pd.read_csv("irisData.csv", header=0)
 Initialize SOM class with specified parameters:
 
 ```
-som = Self-Organizing-Map.SOM(data, no_of_neurons=55, learning_rate=0.5, iterations=100, initial_neighbourhood=0.2,
+som = SelfOrganizingMap.SOM(data, no_of_neurons=55, learning_rate=0.5, iterations=100, initial_neighbourhood=0.2,
                       dead_neur_percent=0.06, delete_neurons=False, display_neighbourhood=False,
                       display_current_iteration=True, display_animation=False, skip_frames_count=1)
 ```
