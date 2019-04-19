@@ -20,7 +20,7 @@ To run the code you have to import the SOM class and pandas library:
 
 ```
 import pandas as pd
-import Self-Organizing-Map
+import SelfOrganizingMap
 ```
 
 Then import your set of data from .csv file:
