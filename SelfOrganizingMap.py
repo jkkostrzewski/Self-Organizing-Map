@@ -8,14 +8,10 @@ from sklearn import preprocessing
 # Cell node
 class CNode:
     def __init__(self, nr_of_weights, weight_arr=None):
-        self.weights = []
-
         if weight_arr == None:
-            for i in range(nr_of_weights):
-                self.weights.append(random.random())
+            self.weights = [random.random() for i in range(nr_of_weights)]
         else:
-            for i in range(nr_of_weights):
-                self.weights.append(weight_arr[i])
+            self.weights = [weight_arr[i] for i in range(nr_of_weights)]
 
     # euclidean distance method
     def get_distance(self, input_array):
@@ -64,7 +60,7 @@ class SOM:
         x_scaled = min_max_scaler.fit_transform(x)
         self._data = pd.DataFrame(x_scaled)
 
-        self._node_array = []
+        self._node_array = [CNode(len(self._data.columns) - 1) for n in range(no_of_neurons)]
         self._winning_node = None
         self._iterations = iterations
         self._current_iteration = 1
@@ -74,7 +70,7 @@ class SOM:
         self._map_radius = initial_neighbourhood
         self._time_constant = iterations / math.log(initial_neighbourhood)
         self._n_radius = self.calculate_radius()
-        self._winning_bool_array = []
+        self._winning_bool_array = [False for i in range(len(self._node_array))]
         self._error_array = []
         if delete_neurons:
             self._dead_neuron_const = dead_neur_percent * iterations
@@ -84,21 +80,12 @@ class SOM:
         self._display_current_iteration = display_current_iteration
         self._display_animation = display_animation
         self._skip_frames_count = skip_frames_count
+
         self._fig_count = int((len(self._data.columns) - 1)/4)
         if (len(self._data.columns) - 1) % 4 == 2:
             self._fig_count += 1
-        self._fig_arr = []
 
-        for fig in range(self._fig_count):
-            self._fig_arr.append(plt.figure(figsize=(6, 10)))
-
-        for n in range(no_of_neurons):
-            self._node_array.append(CNode(len(self._data.columns) - 1))
-
-        for i in range(len(self._node_array)):
-            self._winning_bool_array.append(False)
-
-
+        self._fig_arr = [plt.figure(figsize=(6, 10)) for fig in range(self._fig_count)]
 
     def find_best_node(self, input_array):
         smallest_distance = self._node_array[0].get_distance(input_array)
@@ -120,16 +107,13 @@ class SOM:
     def calculate_error(self):
         distance = 0
         for i in range(len(self._data)):
-            point = []
-            for j in range(1, len(self._data.columns)):
-                point.append(self._data.iloc[i, j])
+            point = [self._data.iloc[i, j] for j in range(1, len(self._data.columns))]
             bmu = self.find_best_node(point)
             distance += bmu.get_distance(point)
         self._error_array.append([math.sqrt((distance**2) / len(self._data)), self._current_iteration])
 
     def reset_bool_array(self):
-        for i in range(len(self._winning_bool_array)):
-            self._winning_bool_array[i] = False
+        self._winning_bool_array = [False for i in range(len(self._node_array))]
 
     def find_and_set_winning_bool(self, winning_node):
         for i in range(len(self._node_array)):
@@ -139,14 +123,12 @@ class SOM:
     def remove_dead_neurons(self):
         end_iterator = len(self._winning_bool_array)
         for i in range(end_iterator):
-            if self._winning_bool_array[i] == False:
+            if not self._winning_bool_array[i]:
                 del self._node_array[i]
                 i -= 1
                 end_iterator -= 1
                 random_int = random.randint(0, len(self._data) - 1)
-                random_point = []
-                for j in range(1, len(self._data.columns)):
-                    random_point.append(self._data.iloc[random_int, j])
+                random_point = [self._data.iloc[random_int, j] for j in range(1, len(self._data.columns))]
                 self._node_array.append(CNode(len(self._data.columns)-1, random_point))
         self.reset_bool_array()
 
@@ -154,11 +136,8 @@ class SOM:
         while self._current_iteration <= self._iterations:
             if self._display_current_iteration:
                 print(self._current_iteration)
-            random_point = []
             random_int = random.randint(0, len(self._data) - 1)
-
-            for i in range(1, len(self._data.columns)):
-                random_point.append(self._data.iloc[random_int, i])
+            random_point = [self._data.iloc[random_int, i] for i in range(1, len(self._data.columns))]
 
             self._n_radius = self.calculate_radius()
 
@@ -189,4 +168,3 @@ class SOM:
         plt.title("Quantization error chart for each epoch")
         plt.plot([row[1] for row in self._error_array], [row[0] for row in self._error_array])
         plt.show()
-
