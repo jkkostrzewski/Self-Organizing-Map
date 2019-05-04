@@ -32,9 +32,9 @@ data = pd.read_csv("irisData.csv", header=0)
 Initialize SOM class with specified parameters:
 
 ```
-som = SelfOrganizingMap.SOM(data, no_of_neurons=55, learning_rate=0.5, iterations=100, initial_neighbourhood=0.2,
-                      dead_neur_percent=0.06, delete_neurons=False, display_neighbourhood=False,
-                      display_current_iteration=True, display_animation=False, skip_frames_count=1)
+som = SelfOrganizingMap.SOM(data, no_of_neurons=20, learning_rate=0.5, iterations=1000, initial_neighbourhood=0.2,
+                      dead_neur_percent=0.06, delete_neurons=True, display_neighbourhood=False,
+                      display_current_iteration=True, display_animation=True, skip_frames_count=25)
 ```
 
 Finally run the alghorithm:
@@ -48,7 +48,7 @@ som.run()
 * data - your set of data to analyze
 * no_of_neurons - number of neurons you want to use to analyze the data (default 25)
 * learning_rate - starting rate at which neurons learn (default 0.5)
-* iterations - number of epochs in which neurons are going to train (default 1000) 
+* iterations - number of epochs in which neurons are going to train (default 1000)
 * initial_neighbourhood - starting neighbourhood radius (default 0.5)
 * dead_neur_percent - decimal value in range 0.00 - 1.00 - percent of max iterations - used to delete dead neurons every such percent (default 0.14)
 * delete_neurons - boolean value - specify whether you want neurons to be deleted every dead_neur_percent percent (default False)
